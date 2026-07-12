@@ -343,7 +343,7 @@ function buildScene(index) {
   return `<svg viewBox="0 0 400 240" xmlns="http://www.w3.org/2000/svg">${svgBody}</svg>`;
 }
 
-function openStar(star, sceneIndex) {
+function openStar(star, imageIndex, sceneIndex) {
   const rect = star.getBoundingClientRect();
   const zoom = document.createElement('div');
   zoom.className = 'zoom-circle';
@@ -363,7 +363,7 @@ function openStar(star, sceneIndex) {
 
   zoom.addEventListener('transitionend', () => {
     overlayImg.style.display = 'block';
-    const imgPath = 'images/star' + (((sceneIndex - 1) % 8) + 1) + '.jpg';
+    const imgPath = 'images/star' + imageIndex + '.jpg';
     overlayImg.onerror = () => {
       console.warn('Could not load image at: ' + imgPath);
       overlayImg.style.display = 'none';
@@ -398,60 +398,57 @@ function makeStars(count) {
     star.style.setProperty('--fy2', fy2);
     star.style.animationDuration = (5 + Math.random() * 4) + 's';
     star.style.animationDelay = (Math.random() * 3) + 's';
-    star.addEventListener('click', () => openStar(star, (i % 8) + 1));
+    star.addEventListener('click', () => openStar(star, i + 1, (i % 8) + 1));
     starContainer.appendChild(star);
   }
 }
 
 const messages = [
-  "You are the heart of my life"
+  "You are the heart of my life",
+  "The life living inside my heart",
+  "The engine that keeps it beating",
+  "The reason I keep growing",
+  "The reason I keep leveling up",
+  "The reason I keep learning",
+  "The reason I'm becoming a better man",
+  "I can't survive two days without you",
+  "My chest tightens... breathing turns heavy",
+  "Even thinking becomes hard",
+  "I can't bear your tears",
+  "They fall like lava on my heart",
+  "Like boiling water",
+  "Please... please, Habibti",
+  "Darling... kitten... princess",
+  "My shelter... my soul... my baby",
+  "My heart... my life... my little girl",
+  "Sweetie... cutie",
+  "Forgive me for breaking your heart",
+  "And please... never stop loving me",
+  "Never stop being jealous when I talk to another girl",
+  "Never stop teasing me",
+  "Never stop bothering me",
+  "Never doubt my love for you",
+  "Never cry again",
+  "I love you more than words can hold",
+  "I can't picture my life with anyone but you",
+  "So please... don't picture yours with anyone but me",
+  "You are always here... yes, right here",
+  "Inside this heart",
+  "You can't leave it... and I can't leave it either",
+  "So let's stay here... together",
+  "Let's take care of each other",
+  "And please... wait for me"
 ];
 
-/* Saved for later — paste back into the array above when ready:
-"The life of my heart",
-"The engine of my heart",
-"The reason why I'm growing up",
-"The reason why I'm leveling up",
-"The reason why I am learning",
-"The reason I'm becoming more responsible",
-"I can't stand two days without you",
-"My chest tightens... breathing becomes hard",
-"Thinking becomes hard",
-"I can't stand your tears",
-"They feel like lava dripping on my heart",
-"Like boiling water",
-"Please... please, Habibti",
-"Darling... kitten... princess",
-"My shelter... my soul... my baby",
-"My heart... my life... my little girl",
-"Sweetie... cutie",
-"Please forgive me for breaking your heart",
-"And please... never stop loving me",
-"Never stop feeling jealous when I talk to a girl",
-"Never stop messing with me",
-"Never stop bothering me",
-"Never doubt my love for you",
-"Never cry again",
-"I love you so much",
-"I can't imagine myself with another woman",
-"So please... could you not imagine yourself with another man too?",
-"You are always here... yes, here",
-"Inside this heart",
-"You can't get out... and I can't get out",
-"So please... we are stuck here",
-"May we take care of each other",
-"May you wait for me"
-*/
-
-const holdTime = 200;
-const fadeTime = 50;
+const holdTime = 2600;
+const fadeTime = 1200;
 
 function showNext(i) {
   if (i >= messages.length) {
     setTimeout(() => {
       container.classList.add('fade-out');
       setTimeout(() => {
-        makeStars(20);
+        makeStars(22);
         starContainer.classList.add('show');
       }, 1500);
     }, fadeTime);
