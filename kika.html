@@ -79,8 +79,13 @@
   #star-container.show {
     opacity: 1;
   }
-  .star {
+  .star-wrap {
     position: absolute;
+    width: 14px;
+    height: 14px;
+    animation: floatstar 6s ease-in-out infinite;
+  }
+  .star {
     width: 14px;
     height: 14px;
     border-radius: 50%;
@@ -89,7 +94,6 @@
     transition: box-shadow 0.3s ease, transform 0.3s ease;
     pointer-events: auto;
     cursor: pointer;
-    animation: floatstar 6s ease-in-out infinite;
   }
   @keyframes floatstar {
     0%   { transform: translate(0, 0); }
@@ -99,9 +103,8 @@
     100% { transform: translate(0, 0); }
   }
   .star:hover {
-    animation-play-state: paused;
     box-shadow: 0 0 16px #ffd400, 0 0 36px #ffd400, 0 0 60px rgba(255,212,0,0.8);
-    transform: scale(1.3) !important;
+    transform: scale(1.3);
   }
   .zoom-circle {
     position: fixed;
@@ -384,22 +387,27 @@ function makeStars(count) {
   const h = window.innerHeight;
   const margin = 80;
   for (let i = 0; i < count; i++) {
-    const star = document.createElement('div');
-    star.className = 'star';
-    star.style.left = (margin + Math.random() * (w - margin * 2)) + 'px';
-    star.style.top = (margin + Math.random() * (h - margin * 2)) + 'px';
+    const wrap = document.createElement('div');
+    wrap.className = 'star-wrap';
+    wrap.style.left = (margin + Math.random() * (w - margin * 2)) + 'px';
+    wrap.style.top = (margin + Math.random() * (h - margin * 2)) + 'px';
     const fx1 = (Math.random() * 40 - 20).toFixed(0) + 'px';
     const fy1 = (Math.random() * 40 - 20).toFixed(0) + 'px';
     const fx2 = (Math.random() * 40 - 20).toFixed(0) + 'px';
     const fy2 = (Math.random() * 40 - 20).toFixed(0) + 'px';
-    star.style.setProperty('--fx1', fx1);
-    star.style.setProperty('--fy1', fy1);
-    star.style.setProperty('--fx2', fx2);
-    star.style.setProperty('--fy2', fy2);
-    star.style.animationDuration = (5 + Math.random() * 4) + 's';
-    star.style.animationDelay = (Math.random() * 3) + 's';
+    wrap.style.setProperty('--fx1', fx1);
+    wrap.style.setProperty('--fy1', fy1);
+    wrap.style.setProperty('--fx2', fx2);
+    wrap.style.setProperty('--fy2', fy2);
+    wrap.style.animationDuration = (5 + Math.random() * 4) + 's';
+    wrap.style.animationDelay = (Math.random() * 3) + 's';
+
+    const star = document.createElement('div');
+    star.className = 'star';
     star.addEventListener('click', () => openStar(star, i + 1, (i % 8) + 1));
-    starContainer.appendChild(star);
+
+    wrap.appendChild(star);
+    starContainer.appendChild(wrap);
   }
 }
 
